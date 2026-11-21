@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-brand-50: #ecfeff;
+  --color-brand-100: #cffafe;
+  --color-brand-400: #22d3ee;
+  --color-brand-500: #06b6d4;
+  --color-brand-600: #0891b2;
+  --color-brand-dark: #083344;
+
+  --color-slate-850: #0d1527;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 15, 29, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 165, 233, 0.4);
+}
+
+/* Background overlay for dashboard pages */
+.dashboard-bg-overlay {
+  background: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 40%),
+              linear-gradient(180deg, rgba(10, 15, 29, 0.94) 0%, rgba(6, 10, 20, 0.98) 100%);
+}
+
+/* Glassmorphic card */
+.glass-card {
+  background: rgba(13, 21, 39, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.glass-card:hover {
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+/* Login page vignette */
+.bg-vignette {
+  background: linear-gradient(
+    to right,
+    rgba(10, 15, 20, 0.85) 0%,
+    rgba(10, 18, 26, 0.65) 45%,
+    rgba(15, 23, 42, 0.35) 100%
+  );
+}
+
+/* Input underline glow */
+.border-glow:focus-within {
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.95);
+}
+
+/* Glow effects */
+.glow-cyan-sm {
+  box-shadow: 0 0 16px -2px rgba(6, 182, 212, 0.25);
+}
+.glow-cyan {
+  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.35);
+}
+.glow-soft {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+}
+.glow-panel {
+  box-shadow: -10px 0 35px -5px rgba(0, 0, 0, 0.6);
+}

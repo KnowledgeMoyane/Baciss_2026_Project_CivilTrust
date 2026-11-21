@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CivicTrust - Project Documentation</title>
+<style>
+  @page { margin: 2.5cm; size: A4; }
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.6; color: #1a1a1a; max-width: 800px; margin: 0 auto; padding: 40px; }
+  h1 { font-size: 24pt; color: #0e7490; border-bottom: 3px solid #0e7490; padding-bottom: 10px; margin-top: 40px; }
+  h2 { font-size: 16pt; color: #164e63; margin-top: 30px; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; }
+  h3 { font-size: 13pt; color: #0e7490; margin-top: 20px; }
+  table { border-collapse: collapse; width: 100%; margin: 15px 0; font-size: 10pt; }
+  th { background-color: #0e7490; color: white; padding: 10px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border: 1px solid #e2e8f0; }
+  tr:nth-child(even) { background-color: #f8fafc; }
+  .cover { text-align: center; padding: 80px 0; page-break-after: always; }
+  .cover h1 { font-size: 36pt; border: none; color: #0e7490; }
+  .cover .subtitle { font-size: 14pt; color: #475569; margin-top: 10px; }
+  .cover .meta { font-size: 11pt; color: #64748b; margin-top: 40px; line-height: 2; }
+  .highlight { background-color: #ecfeff; border-left: 4px solid #0e7490; padding: 12px 16px; margin: 15px 0; border-radius: 0 4px 4px 0; }
+  .qa { margin: 12px 0; }
+  .qa strong { color: #0e7490; }
+  .qa p { margin: 4px 0 16px 0; }
+  .step { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 6px; padding: 14px 18px; margin: 12px 0; }
+  .step-num { display: inline-block; background: #0e7490; color: white; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 10pt; font-weight: bold; margin-right: 8px; }
+  code { background: #f1f5f9; padding: 2px 6px; border-radius: 3px; font-family: Consolas, monospace; font-size: 10pt; }
+  ul { margin: 8px 0; }
+  li { margin: 4px 0; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <h1>CivicTrust</h1>
+  <div class="subtitle">Blockchain-Based Municipal Tender Escrow &amp; Citizen Auditing Platform</div>
+  <p style="font-size: 12pt; color: #94a3b8; margin-top: 5px;">Decentralized Accountability for South African Public Works</p>
+
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<h1>Table of Contents</h1>
+<ol style="font-size: 11pt; line-height: 2.2;">
+  <li>Problem Statement</li>
+  <li>Proposed Solution</li>
+  <li>Feasibility Analysis</li>
+  <li>Technical Stack &amp; Justification</li>
+  <li>System Architecture</li>
+  <li>User Roles &amp; Access Model</li>
+  <li>Demo Flow &amp; Scenario Walkthrough</li>
+  <li>Anticipated Questions &amp; Answers</li>
+</ol>
+
+<!-- 1. PROBLEM STATEMENT -->
+<h1 class="page-break">1. Problem Statement</h1>
+
+<h3>Context</h3>
+<p>South Africa allocates billions of Rands annually to municipal infrastructure projects — roads, water systems, community halls, drainage, and housing. Despite this investment, the country faces a persistent crisis of <strong>tender fraud, corruption, and poor service delivery</strong> at the municipal level.</p>
+
+<h3>Key Issues</h3>
+<table>
+  <tr><th>Issue</th><th>Impact</th></tr>
+  <tr><td><strong>Opaque tender processes</strong></td><td>Citizens have no visibility into how public funds are allocated, locked, or spent. Municipal budgets are managed behind closed doors.</td></tr>
+  <tr><td><strong>No independent verification</strong></td><td>Contractors self-report project completion. There is no objective, automated mechanism to verify that physical work was actually done to standard.</td></tr>
+  <tr><td><strong>Delayed or stolen payments</strong></td><td>Contractors who do honest work face delayed payments. Corrupt officials divert funds before work is completed.</td></tr>
+  <tr><td><strong>No citizen participation</strong></td><td>Residents living next to construction sites have no formal channel to report progress, defects, or fraud to auditors.</td></tr>
+  <tr><td><strong>Ward committee rubber-stamping</strong></td><td>Ward committees often approve projects without visiting sites or reviewing evidence, as there is no structured on-chain voting record.</td></tr>
+  <tr><td><strong>No audit trail</strong></td><td>Paper-based records can be lost, altered, or destroyed. There is no immutable ledger of who approved what and when.</td></tr>
+</table>
+
+<div class="highlight">
+  <strong>Core Problem:</strong> There is no transparent, tamper-proof, and citizen-inclusive system for managing municipal tender funds, verifying construction quality, and ensuring democratic community oversight in South African municipalities.
+</div>
+
+<!-- 2. PROPOSED SOLUTION -->
+<h1 class="page-break">2. Proposed Solution</h1>
+
+<p><strong>CivicTrust</strong> is a decentralized web application that places municipal tender funds into blockchain-controlled escrow and uses AI-powered photo analysis to verify construction progress before releasing payments. It introduces five key innovations:</p>
+
+<h3>2.1 Milestone-Based Smart Contract Escrow</h3>
+<p>When a municipality creates a tender, the full budget is locked in an Ethereum smart contract. Funds are split across milestones (e.g., foundation, walls, roofing, finishing). Each milestone's funds can only be released when it passes AI verification AND receives unanimous ward committee approval. No single person can move the money.</p>
+
+<h3>2.2 AI-Powered Construction Verification (Gemini Vision)</h3>
+<p>Instead of relying on contractor self-reporting, CivicTrust uses Google's Gemini Vision AI to compare "before" baseline photos with "after" citizen-uploaded photos. The AI scores the project on structural integrity, materials quality, and completion progress (0-100). A score below 75% automatically flags the milestone as disputed.</p>
+
+<h3>2.3 Citizen Evidence Collection</h3>
+<p>Any resident with a smartphone can open the Citizen Area Scanner (no wallet or login required), scan their GPS location to find nearby tenders, photograph the construction site, and submit their evidence. This photo is pinned to IPFS (permanent decentralized storage) and fed to the AI auditor.</p>
+
+<h3>2.4 Ward Committee 3-of-3 Multisig Voting</h3>
+<p>Three designated ward committee representatives must unanimously approve each milestone on-chain before funds are released. If any single rep rejects, the milestone is immediately flagged as disputed. Every vote is permanently recorded on the blockchain — no more rubber-stamping without evidence.</p>
+
+<h3>2.5 Full Public Transparency</h3>
+<p>Every tender, every escrow balance, every AI score, and every vote is recorded on the public Ethereum blockchain. Anyone can verify the state of any project using a block explorer like Etherscan.</p>
+
+<div class="highlight">
+  <strong>In summary:</strong> Municipality locks funds &rarr; Citizen uploads evidence &rarr; AI verifies quality &rarr; Ward committee votes on-chain &rarr; Smart contract auto-releases funds to contractor. No intermediary can steal or redirect the money.
+</div>
+
+<!-- 3. FEASIBILITY -->
+<h1 class="page-break">3. Feasibility Analysis</h1>
+
+<h3>3.1 Technical Feasibility</h3>
+<table>
+  <tr><th>Factor</th><th>Assessment</th></tr>
+  <tr><td>Blockchain deployment</td><td><strong>Feasible.</strong> Ethereum Sepolia is a free testnet with identical functionality to mainnet. Solidity smart contracts are well-documented and mature.</td></tr>
+  <tr><td>AI image analysis</td><td><strong>Feasible.</strong> Google Gemini Vision API provides multimodal image comparison capabilities with a generous free tier. Fallback models ensure availability.</td></tr>
+  <tr><td>IPFS file storage</td><td><strong>Feasible.</strong> Pinata provides free IPFS pinning (up to 1GB). Photos and reports are permanently addressable via content hashes (CIDs).</td></tr>
+  <tr><td>GPS geolocation</td><td><strong>Feasible.</strong> All modern smartphones support the HTML5 Geolocation API. No additional hardware needed.</td></tr>
+  <tr><td>Wallet authentication</td><td><strong>Feasible.</strong> MetaMask is the most widely adopted browser wallet with over 30 million users. Installation is free.</td></tr>
+</table>
+
+<h3>3.2 Economic Feasibility</h3>
+<table>
+  <tr><th>Service</th><th>Cost</th></tr>
+  <tr><td>Ethereum Sepolia (testnet)</td><td>Free (test ETH from faucets)</td></tr>
+  <tr><td>Supabase (database)</td><td>Free tier — 500MB database, 50,000 monthly active users</td></tr>
+  <tr><td>Pinata IPFS</td><td>Free tier — 1GB storage, 100 pins</td></tr>
+  <tr><td>Google Gemini AI</td><td>Free tier — 15 requests/minute</td></tr>
+  <tr><td>Vercel/Netlify hosting</td><td>Free tier for frontend deployment</td></tr>
+  <tr><td><strong>Total</strong></td><td><strong>R0.00 for development and testing</strong></td></tr>
+</table>
+
+<h3>3.3 Operational Feasibility</h3>
+<ul>
+  <li><strong>Citizens:</strong> No technical knowledge required — no wallet, no login, just open the browser and scan.</li>
+  <li><strong>Ward Reps:</strong> Only need MetaMask installed and their wallet whitelisted. Two-button interface (Approve/Reject).</li>
+  <li><strong>Municipal Officials:</strong> Form-based tender creation with familiar UI patterns.</li>
+  <li><strong>Contractors:</strong> Read-only dashboard — no blockchain interaction needed beyond receiving automated payments.</li>
+</ul>
+
+<h3>3.4 Legal Feasibility</h3>
+<p>The Municipal Finance Management Act (MFMA) requires transparent procurement processes. CivicTrust enhances compliance by providing an immutable audit trail. All smart contract interactions are publicly verifiable, satisfying the constitutional right of access to information (Section 32, Constitution of South Africa).</p>
+
+<!-- 4. TECHNICAL STACK -->
+<h1 class="page-break">4. Technical Stack &amp; Justification</h1>
+
+<table>
+  <tr><th>Technology</th><th>Category</th><th>What It Does in CivicTrust</th><th>Why This Choice</th></tr>
+  <tr>
+    <td><strong>Solidity 0.8.20</strong></td>
+    <td>Smart Contract Language</td>
+    <td>Defines the CivicTrust contract — escrow logic, milestone management, voting rules, access control, and automated fund release.</td>
+    <td>Industry-standard language for Ethereum smart contracts. Mature tooling, extensive documentation, and built-in overflow protection.</td>
+  </tr>
+  <tr>
+    <td><strong>Ethereum Sepolia</strong></td>
+    <td>Blockchain Network</td>
+    <td>Hosts the deployed smart contract. All transactions (tender creation, votes, fund releases) are permanently recorded here.</td>
+    <td>Free testnet with identical EVM behavior to Ethereum mainnet. Allows full demonstration without real financial risk.</td>
+  </tr>
+  <tr>
+    <td><strong>MetaMask</strong></td>
+    <td>Wallet &amp; Authentication</td>
+    <td>Authenticates Municipal Officials, Contractors, and Ward Reps. Signs on-chain transactions. Provides role-based access to the app.</td>
+    <td>Most widely adopted browser wallet (30M+ users). Free, open-source, and works on all major browsers.</td>
+  </tr>
+  <tr>
+    <td><strong>ethers.js v6</strong></td>
+    <td>Blockchain SDK</td>
+    <td>Frontend and backend library for reading from and writing to the smart contract. Encodes function calls, parses events, formats ETH values.</td>
+    <td>Lightweight, well-documented, and the most popular JavaScript library for Ethereum interaction.</td>
+  </tr>
+  <tr>
+    <td><strong>React 19 + Vite</strong></td>
+    <td>Frontend Framework</td>
+    <td>Renders all 6 dashboard pages — Municipal Dashboard, Create Tender, Active Tenders, Contractor Dashboard, Ward Committee, Citizen Scanner.</td>
+    <td>React is the industry standard for component-based UIs. Vite provides instant hot-reload during development and fast production builds.</td>
+  </tr>
+  <tr>
+    <td><strong>Tailwind CSS v4</strong></td>
+    <td>Styling</td>
+    <td>Provides the glassmorphic dark theme, responsive layouts, and consistent design system across all pages.</td>
+    <td>Utility-first approach enables rapid UI development without writing custom CSS files. Built-in responsive design.</td>
+  </tr>
+  <tr>
+    <td><strong>Google Gemini Vision AI</strong></td>
+    <td>AI / Computer Vision</td>
+    <td>Compares before/after construction photos and scores structural integrity, materials quality, and completion progress (0-100). Identifies defects.</td>
+    <td>State-of-the-art multimodal AI with a free tier. Can analyze images and return structured JSON assessments. No training data required.</td>
+  </tr>
+  <tr>
+    <td><strong>Pinata / IPFS</strong></td>
+    <td>Decentralized File Storage</td>
+    <td>Stores baseline photos, citizen evidence photos, and AI audit reports permanently. Each file gets a unique CID (content identifier) referenced on-chain.</td>
+    <td>IPFS ensures files cannot be altered or deleted after upload. Content-addressed storage means the CID on the blockchain guarantees the exact file. Pinata provides a free managed gateway.</td>
+  </tr>
+  <tr>
+    <td><strong>Supabase (PostgreSQL)</strong></td>
+    <td>Cloud Database</td>
+    <td>Caches tender metadata, milestones, citizen evidence records, AI reports, vote history, and activity logs for fast frontend queries.</td>
+    <td>Open-source Firebase alternative with a generous free tier. Provides real-time subscriptions, Row Level Security, and a REST API out of the box.</td>
+  </tr>
+  <tr>
+    <td><strong>Express.js (Node)</strong></td>
+    <td>Backend Server</td>
+    <td>Serves API endpoints: citizen evidence upload, Gemini AI audit trigger, blockchain-to-Supabase sync, GPS-based tender search, and activity feeds.</td>
+    <td>Minimal, fast, and the most popular Node.js framework. Handles file uploads (multer) and coordinates between Pinata, Gemini, Supabase, and the blockchain.</td>
+  </tr>
+</table>
+
+<!-- 5. SYSTEM ARCHITECTURE -->
+<h1 class="page-break">5. System Architecture</h1>
+
+<h3>Data Flow Overview</h3>
+<pre style="background: #0f172a; color: #e2e8f0; padding: 20px; border-radius: 8px; font-size: 9pt; line-height: 1.8; overflow-x: auto;">
+  MUNICIPALITY                    CITIZEN                      WARD COMMITTEE
+      |                              |                              |
+  [MetaMask]                    [Browser GPS]                  [MetaMask]
+      |                              |                              |
+  createTender()               Upload Photo                    castVote()
+  + lock ETH                        |                              |
+      |                     +-------+-------+                      |
+      v                     |               |                      v
+ +-----------+        +----------+   +-----------+          +-----------+
+ | Ethereum  |        | Express  |   | Pinata    |          | Ethereum  |
+ | Sepolia   |        | Server   |-->| IPFS      |          | Sepolia   |
+ | Contract  |        +----------+   +-----------+          | Contract  |
+ +-----------+              |               |               +-----------+
+      |                     v               |                      |
+      |              +-----------+          |                      |
+      |              | Gemini AI |          |                      |
+      |              | Vision    |<---------+                      |
+      |              +-----------+                                 |
+      |                     |                                      |
+      |                     v                                      |
+      |              +-----------+                                 |
+      +------------->| Supabase  |<--------------------------------+
+                     | Database  |
+                     +-----------+
+                          |
+                     [All Dashboards]
+</pre>
+
+<h3>Key Architectural Decisions</h3>
+<ul>
+  <li><strong>On-chain:</strong> Escrow funds, tender state, milestone status, votes — anything that requires trustlessness and immutability.</li>
+  <li><strong>Off-chain (Supabase):</strong> Photo URLs, AI report text, GPS coordinates, activity logs — data that is too large or expensive to store on-chain but still needs fast querying.</li>
+  <li><strong>IPFS:</strong> Permanent content-addressed storage for photos and reports. The CID stored on-chain guarantees the file hasn't been tampered with.</li>
+  <li><strong>Oracle pattern:</strong> The backend server acts as a trusted oracle — it submits citizen evidence and AI scores to the smart contract on behalf of users who don't have wallets.</li>
+</ul>
+
+<!-- 6. USER ROLES -->
+<h1 class="page-break">6. User Roles &amp; Access Model</h1>
+
+<table>
+  <tr><th>Role</th><th>Authentication</th><th>Pages</th><th>On-Chain Actions</th></tr>
+  <tr>
+    <td><strong>Municipal Official</strong></td>
+    <td>MetaMask wallet (whitelisted via <code>isMunicipal</code>)</td>
+    <td>Dashboard, Create Tender, Active Tenders</td>
+    <td>createTender, cancelTender, reassignContractor, reInspectMilestone</td>
+  </tr>
+  <tr>
+    <td><strong>Contractor</strong></td>
+    <td>MetaMask wallet (assigned to a tender)</td>
+    <td>Contractor Dashboard</td>
+    <td>None (read-only). Receives automated ETH payouts.</td>
+  </tr>
+  <tr>
+    <td><strong>Ward Committee Rep</strong></td>
+    <td>MetaMask wallet (whitelisted via <code>isGlobalWardRep</code>)</td>
+    <td>Ward Committee Vote &amp; Sign-Off</td>
+    <td>castVote (approve or reject)</td>
+  </tr>
+  <tr>
+    <td><strong>Citizen / Resident</strong></td>
+    <td>None required (open access)</td>
+    <td>Citizen Area Scanner</td>
+    <td>None. Evidence submitted via backend oracle.</td>
+  </tr>
+</table>
+
+<div class="highlight">
+  <strong>Security model:</strong> The smart contract constructor automatically whitelists the deployer as both Super-Admin and Municipal Official. Only the Super-Admin can authorize new Municipal Officials and Ward Reps. Contractor addresses are set per-tender during creation. Citizens never interact with the blockchain directly.
+</div>
+
+<!-- 7. DEMO FLOW -->
+<h1 class="page-break">7. Demo Flow &amp; Scenario Walkthrough</h1>
+
+<p><strong>Scenario:</strong> The City of Johannesburg needs to repair a gravel road in Ward 14. We will walk through the entire lifecycle — from tender creation to fund release — demonstrating each technology at every step.</p>
+
+<h3>Phase 1: Municipal Official Creates Tender</h3>
+
+<div class="step">
+  <span class="step-num">1</span> <strong>Connect Wallet</strong><br>
+  The municipal official opens the CivicTrust login page and clicks "Connect MetaMask Wallet". <br>
+  <em>Technology: MetaMask injects the Ethereum provider into the browser. ethers.js reads the connected wallet address and calls <code>isMunicipal(address)</code> on the smart contract to verify the role. React Router redirects to the Municipal Dashboard.</em>
+</div>
+
+<div class="step">
+  <span class="step-num">2</span> <strong>Create &amp; Fund Tender</strong><br>
+  Navigate to "Create Tender". Fill in: title ("Ward 14 Gravel Road Repair"), ward, contractor wallet, GPS coordinates (-26.1907, 27.997), deadline, 3 ward rep wallets, baseline "before" photo, and milestone amounts (e.g., 0.002 ETH for foundation, 0.002 ETH for surfacing).<br>
+  <em>Technology: The baseline photo is pinned to Pinata IPFS, returning a CID. The form calls <code>createTender(params)</code> on the Solidity smart contract via ethers.js, sending the total ETH as <code>msg.value</code>. The contract validates all inputs, locks the ETH in escrow, initializes milestones, and emits a <code>TenderCreated</code> event. The frontend then calls <code>/api/sync-tender</code> to cache the data in Supabase for fast queries.</em>
+</div>
+
+<div class="step">
+  <span class="step-num">3</span> <strong>Verify on Dashboard</strong><br>
+  Return to the Dashboard. KPI cards show updated escrow balance and active tender count, pulled live from the smart contract via <code>getDashboardStats()</code>.<br>
+  <em>Technology: React <code>useEffect</code> calls the contract's view function. ethers.js decodes the returned tuple. The activity feed is fetched from Supabase's <code>activity_log</code> table via the Express API.</em>
+</div>
+
+<h3>Phase 2: Citizen Submits Evidence</h3>
+
+<div class="step">
+  <span class="step-num">4</span> <strong>Open Citizen Scanner (No Wallet)</strong><br>
+  A resident near the construction site opens the app and clicks "Citizen Area Scanner" from the login page. No wallet connection needed.<br>
+  <em>Technology: This route is unprotected in React Router — no <code>RequireRole</code> wrapper. The page renders without any blockchain authentication.</em>
+</div>
+
+<div class="step">
+  <span class="step-num">5</span> <strong>Scan GPS &amp; Find Nearby Tenders</strong><br>
+  Click "Scan My Location". The browser requests GPS permission. Nearby active tenders appear as cards showing distance in meters.<br>
+  <em>Technology: HTML5 Geolocation API provides coordinates. The frontend calls <code>/api/tenders/nearby?lat=-26.19&amp;lng=27.99</code>. The Express server queries Supabase for active tenders, computes Haversine distance for each, filters within 5km radius, and returns sorted results.</em>
+</div>
+
+<div class="step">
+  <span class="step-num">6</span> <strong>Upload Photo &amp; Run AI Audit</strong><br>
+  Select the tender, photograph the site, add observation notes, and click "Upload Photo to IPFS". Then click "Run Gemini AI Audit".<br>
+  <em>Technology: (Upload) The photo is sent as multipart/form-data to <code>POST /api/evidence</code>. The Express server pins it to Pinata IPFS, stores the CID and metadata in Supabase's <code>citizen_evidence</code> table, and calls <code>submitEvidence()</code> on the smart contract via the oracle wallet. <br>(AI Audit) <code>POST /api/audit</code> fetches both the before (baseline) and after (citizen) photos, converts them to base64, sends them to Google Gemini Vision AI with a structured prompt, receives JSON scores, pins the report to IPFS, stores it in Supabase, and calls <code>submitAIScore()</code> on the smart contract. If score >= 75, the milestone moves to AwaitingVote. If < 75, it's flagged as Disputed.</em>
+</div>
+
+<h3>Phase 3: Ward Committee Votes</h3>
+
+<div class="step">
+  <span class="step-num">7</span> <strong>Ward Rep Logs In</strong><br>
+  Switch MetaMask to a ward rep account. Connect wallet on the login page. The app detects <code>isGlobalWardRep</code> and routes to the Ward Committee page.<br>
+  <em>Technology: The <code>useWallet</code> hook calls <code>isGlobalWardRep(address)</code> on the smart contract. React Router's <code>RequireRole</code> component checks the detected role before rendering the page.</em>
+</div>
+
+<div class="step">
+  <span class="step-num">8</span> <strong>Review Evidence &amp; Cast Vote</strong><br>
+  Expand the tender card to see before/after IPFS photos, Gemini AI scores (overall, structural, materials, completion), citizen notes, and the live vote status. Click "Approve" or "Reject".<br>
+  <em>Technology: Tender data is fetched via <code>getWardRepTenderIds()</code> then <code>getTender()</code> and <code>getAllMilestones()</code>. Vote status uses <code>getMilestoneVoteStatus()</code>. The Approve/Reject button calls <code>castVote(tenderId, true/false)</code> on the smart contract via MetaMask. If 3-of-3 approve, the contract automatically calls <code>_releaseMilestone()</code> which transfers ETH to the contractor and advances to the next milestone.</em>
+</div>
+
+<h3>Phase 4: Contractor Receives Payout</h3>
+
+<div class="step">
+  <span class="step-num">9</span> <strong>Contractor Views Dashboard</strong><br>
+  Switch MetaMask to the contractor account. The Contractor Dashboard shows all assigned tenders, milestone progress bars, AI scores, and payout amounts.<br>
+  <em>Technology: <code>getContractorTenderIds(address)</code> returns the contractor's tender IDs. <code>getAllMilestones()</code> provides the pipeline view. Released milestones show the payout timestamp and amount. The ETH was automatically sent to this wallet address by the smart contract's <code>_releaseMilestone()</code> function — no claim needed.</em>
+</div>
+
+<!-- 8. Q&A -->
+<h1 class="page-break">8. Anticipated Questions &amp; Answers</h1>
+
+<div class="qa">
+  <strong>Q: Why blockchain instead of a normal database?</strong>
+  <p>A normal database can be altered by administrators. The core problem we're solving is <em>trust</em> — municipal officials, contractors, and citizens don't trust each other. The blockchain provides an immutable, publicly verifiable ledger that no single party can tamper with. The smart contract enforces the rules automatically — funds cannot be released without AI verification AND ward committee approval. No human can bypass this.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: Why Ethereum Sepolia instead of Avalanche or another chain?</strong>
+  <p>Sepolia is the official Ethereum testnet — it's free, stable, and has the most tooling support (MetaMask, Etherscan, Remix, ethers.js). For production, the contract could be deployed to Ethereum mainnet, Avalanche, Polygon, or any EVM-compatible chain with minimal code changes. The contract is chain-agnostic.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: What happens if the AI gives an incorrect score?</strong>
+  <p>The AI score is one layer of verification, not the only one. If the AI scores below 75%, the milestone is flagged as disputed, and the municipality can trigger a re-inspection (<code>reInspectMilestone()</code>) which resets the cycle. If the AI scores above 75%, the ward committee still has to unanimously approve — they can reject if they disagree with the AI. The system is designed with multiple checkpoints.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: What if a ward committee member is corrupt?</strong>
+  <p>Every vote is recorded on-chain with the voter's wallet address, the timestamp, and whether they approved or rejected. This creates permanent accountability. If a rep approves a clearly deficient project, their vote is publicly visible on Etherscan forever. Additionally, the 3-of-3 requirement means all three must agree — one honest rep can block a fraudulent release.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: How does the citizen scanner work without a wallet?</strong>
+  <p>Citizens interact only with the Express backend server, which acts as an "oracle" — a trusted intermediary that submits data to the blockchain on their behalf. The citizen uploads a photo to the server, which pins it to IPFS, runs the AI audit, and calls <code>submitEvidence()</code> and <code>submitAIScore()</code> on the smart contract using its own authorized oracle wallet. The citizen never needs ETH, a wallet, or any blockchain knowledge.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: What if the contractor doesn't do the work?</strong>
+  <p>The funds remain locked in the smart contract escrow. No work = no citizen evidence photos = no AI score = no ward committee vote = no payment. If the milestone is disputed, the municipality can reassign the contractor (<code>reassignContractor()</code>) or cancel the tender entirely (<code>cancelTender()</code>), which refunds the remaining escrow to the municipal treasury.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: Can someone upload a fake photo?</strong>
+  <p>Several countermeasures: (1) The citizen's GPS coordinates are recorded and compared against the tender's geofence — the photo must come from near the actual site. (2) Gemini AI compares the uploaded photo against the baseline "before" photo — it will detect if the photo doesn't match the expected location or shows a completely different site. (3) The photo is permanently pinned to IPFS with an immutable CID, so it cannot be swapped later.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: Why use IPFS instead of storing photos in Supabase?</strong>
+  <p>IPFS provides content-addressed storage — the file's hash (CID) is stored on the blockchain. This means anyone can independently verify that the photo referenced on-chain hasn't been modified. Supabase could be edited by an administrator. IPFS + blockchain together create a tamper-proof evidence chain.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: What is the 3-of-3 multisig and why not 2-of-3?</strong>
+  <p>3-of-3 means all three ward committee representatives must unanimously approve a milestone release. This is stricter than 2-of-3 because it prevents any two colluding members from approving a fraudulent project. Any single honest representative can block a release by rejecting. For municipal public funds, this higher standard is justified — it prioritizes accountability over convenience.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: How would this scale to production?</strong>
+  <p>For production: (1) Deploy the contract to Ethereum mainnet or a Layer 2 like Polygon/Arbitrum for lower gas fees. (2) Upgrade Supabase and Pinata to paid tiers. (3) Add a proper oracle service (e.g., Chainlink) instead of a single backend wallet. (4) Implement proper Supabase Row Level Security policies. (5) Add mobile-responsive PWA support. The architecture is already production-ready — only configuration changes are needed.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: What is the smart contract's gas cost?</strong>
+  <p>On Sepolia (testnet), gas is free. On Ethereum mainnet, <code>createTender</code> costs approximately 300,000-500,000 gas (~$5-15 depending on network congestion). <code>castVote</code> costs ~80,000 gas (~$1-3). On Layer 2 networks like Polygon, these costs drop to fractions of a cent. For municipal budgets of millions of Rands, these costs are negligible.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: Why Supabase if data is on the blockchain?</strong>
+  <p>The blockchain stores state (escrow amounts, vote counts, milestone status) but it's slow and expensive to query. Supabase acts as an indexed cache for fast frontend queries — filtering tenders by ward, searching by GPS proximity, loading activity feeds, and storing large text data like AI reports. The blockchain remains the source of truth; Supabase is the read-optimized layer.</p>
+</div>
+
+<div class="qa">
+  <strong>Q: What prevents the oracle (backend) from submitting fake AI scores?</strong>
+  <p>The oracle is a known, authorized address set by the super-admin. In production, this would be replaced with a decentralized oracle network (e.g., Chainlink Functions) where multiple independent nodes verify the AI score before submitting. For this prototype, the single oracle model demonstrates the concept while keeping costs at zero.</p>
+</div>
+
+</body>
+</html>
